@@ -8,7 +8,7 @@ uname = sys.argv[2]
 
 async def foo(msg,uname):
     async with aiohttp.ClientSession() as session:
-        webhook = Webhook.from_url('https://discord.com/api/webhooks/1238851270597541888/krtdLGswv7LRx1KhqvQdRh2MR9xCGsSSROmoRikxD_FEeQ3gfU16OUzB1CPSko5OZDX9', session=session)
+        webhook = Webhook.from_url('https://discord.com/api/webhooks/1238853077130412174/u7OGMX7WqdMdvSjAMyfGrwsZ4OQtDtwt4ExmZQnfOMV30p3Sxwk7vMUsg1pY2JDOFlGm', session=session)
         await webhook.send(msg, username=uname,silent=True)
 
 loop=asyncio.get_event_loop()
