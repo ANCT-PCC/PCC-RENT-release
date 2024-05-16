@@ -1,0 +1,14 @@
+[Unit]
+Description=PCC-RENT Server Service
+After=network.target
+
+[Service]
+Type=forking
+User=root
+Group=root
+WorkingDirectory=/home/ubuntu/PCC-RENT/
+ExecStart=/home/ubuntu/PCC-RENT/start.sh
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
