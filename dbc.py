@@ -49,7 +49,7 @@ def create_new_user(display_name:str,name:str,email:str,isAdmin:bool,passwd:str,
     c.execute(INIT_SQL_COMMAND)
     solt = 'not set'
 
-    data = (display_name,name,email,str(isAdmin),solt,hashlib.sha256(passwd.encode("utf-8")).hexdigest(),0,'not set','NoToken',str(grade),user_class,discord)
+    data = (display_name,name,email,str(isAdmin),solt,hashlib.sha256(passwd.encode("utf-8")).hexdigest(),0,'not set','NoToken',str(grade)+'年 ',user_class,discord)
     #テーブルに登録情報を記録
     sql = f'''
         INSERT INTO "pcc-users" VALUES(?,?,?,?,?,?,?,?,?,?,?,?)
