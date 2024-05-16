@@ -9,7 +9,7 @@ import datetime
 
 TOKEN_SIZE = 64 #トークンのサイズ
 COOKIE_AGE = 1 #Cookieの有効期限(単位:h)
-VERSION = '1.3'
+VERSION = '1.4'
 
 app = Flask(__name__)
 #context = ssl.SSLContext(ssl.PROTOCOL_TLSv1_2)

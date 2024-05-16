@@ -63,7 +63,7 @@ window.onload = function(){
           }
 
           document.getElementById('return_button'+String(i)).addEventListener('click',(e)=>{
-            var number = e.target.id[13]
+            var number = String(e.target.id).replace('return_button','')
             var iteminfo = [{
               rental_id: document.getElementById("rental_id"+number).textContent
             }]
