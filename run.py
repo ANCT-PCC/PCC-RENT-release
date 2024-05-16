@@ -380,7 +380,7 @@ def rental_item():
         item_name = dbc.search_iteminfo_from_number(item_number)[1]
         print("アイテムの名前"+item_name)
         use = '未記載'
-        res = dbc.rent_item(item_number,item_name,use,displayname)
+        res = dbc.rent_item(item_number,item_name,use,displayname,uname)
 
         if res == 0:
             return "OK",200

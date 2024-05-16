@@ -225,7 +225,7 @@ def search_userrentalinfo_from_number(number:str):
     
 
 #備品を借用(履歴に記録)
-def rent_item(item_number:str,item_name:str,use:str,rentby:str):
+def rent_item(item_number:str,item_name:str,use:str,rentby:str,uname:str):
     conn = sqlite3.connect(DB_NAME)
     c = conn.cursor()
     #テーブルがなければ作成
@@ -258,7 +258,7 @@ def rent_item(item_number:str,item_name:str,use:str,rentby:str):
         #Discord 借用通知
         message = f"備品番号{item_number}:「{item_name}」を **借用** しました"
         
-        userinfo = search_userinfo_from_name(rentby)
+        userinfo = search_userinfo_from_name(uname)[0]
         grade_class = userinfo[9]+userinfo[10]
         displayname = userinfo[0]
         discord_message(message,grade_class+" "+displayname)
