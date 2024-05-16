@@ -7,6 +7,8 @@ import hashlib
 import ssl
 import datetime
 
+VERSION = '1.2'
+
 TOKEN_SIZE = 64 #トークンのサイズ
 COOKIE_AGE = 1 #Cookieの有効期限(単位:h)
 
@@ -43,7 +45,7 @@ def index():
     else:
         uname,login_status = dbc.cktoken(uname,token)
         if login_status == 3: #ログイン状態である
-            return render_template('dashboard.html',uname = displayname)
+            return render_template('dashboard.html',uname = displayname,ver=VERSION)
         elif login_status == 1 or login_status == 2:
             return redirect('/login')
     
@@ -169,7 +171,7 @@ def user_settings():
         if login_status != 3:
             return redirect('/login')
         else:
-            return render_template('user_settings.html',uname=displayname)
+            return render_template('user_settings.html',uname=displayname,ver=VERSION)
         
 @app.route('/user_settings_discord',methods=['POST'])
 def user_settings_discord():
@@ -197,7 +199,7 @@ def my_rental_list():
     if login_status != 3:
         return redirect('/login')
     else:
-        return render_template('my_rental_list.html',uname=displayname)
+        return render_template('my_rental_list.html',uname=displayname,ver=VERSION)
     
 @app.route('/pcc-items')
 def pcc_items():
@@ -209,7 +211,7 @@ def pcc_items():
     if login_status != 3:
         return redirect('/login')
     else:
-        return render_template('pcc-items.html',uname=displayname)
+        return render_template('pcc-items.html',uname=displayname,ver=VERSION)
     
 @app.route('/members')
 def members():
@@ -221,7 +223,7 @@ def members():
     if login_status != 3:
         return redirect('/login')
     else:
-        return render_template('members.html',uname=displayname)
+        return render_template('members.html',uname=displayname,ver=VERSION)
     
 @app.route('/show_members')
 def show_members():
