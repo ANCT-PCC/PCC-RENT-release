@@ -71,7 +71,7 @@ window.onload = function(){
                 dataType: 'json',
                 contentType: 'application/json'
               }).always(function(){
-                //location.reload()
+                location.reload()
               })
           })
         }
