@@ -2,5 +2,5 @@
 .vscode
 __pycache__
 pcc-rent.db
-userSubmit.csv
-itemSubmit.csv
+userList.csv
+itemList.csv
