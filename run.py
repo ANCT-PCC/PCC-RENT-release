@@ -9,7 +9,7 @@ import datetime
 
 TOKEN_SIZE = 64 #トークンのサイズ
 COOKIE_AGE = 1 #Cookieの有効期限(単位:h)
-VERSION = '1.2'
+VERSION = '1.3'
 
 app = Flask(__name__)
 #context = ssl.SSLContext(ssl.PROTOCOL_TLSv1_2)
@@ -359,9 +359,8 @@ def return_item():
         rental_id = request.json[0]['rental_id']
         userinfo = dbc.search_userinfo_from_name(uname)[0]
         displayname = userinfo[0]
-        grade_class = userinfo[9]+userinfo[10]
         
-        res = dbc.return_item(rental_id=rental_id,returnedby=grade_class+" "+displayname)
+        res = dbc.return_item(rental_id=rental_id,returnedby=displayname+' '+uname)
         if res == 0:
             return "OK",200
         else:
