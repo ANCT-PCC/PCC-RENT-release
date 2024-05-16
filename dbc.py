@@ -13,13 +13,13 @@ INIT_SQL_COMMAND_2 = '''CREATE TABLE IF NOT EXISTS "pcc-items"(number,item_name,
 INIT_SQL_COMMAND_3 = '''CREATE TABLE IF NOT EXISTS "pcc-rental"(number,item_name,use,rentby,rent,deadline,returned,rental_id) '''
 
 #汎用SQL実行
-def sqlExecute(mode:int,sql:str):
+def sqlExecute(mode:bool,sql:str):
     conn = sqlite3.connect(DB_NAME)
     c = conn.cursor()
     c.execute(sql)
     res=c.fetchall()
 
-    if mode == 1:
+    if mode == True:
         #書き込みモード
         print("\n[Notice]\t書き込みモードで実行しました")
         conn.commit()
