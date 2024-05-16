@@ -36,9 +36,9 @@ window.onload = function(){
               }else if(j==2){
                 td.innerHTML = "<a id='item"+String(i)+"'>"+res[i]['returned']+"</a>"+"<br>"+"<button id='"+"return_button"+String(i)+"' type='button' class='btn btn-primary'>返却</button>"
               }else if(j==3){
-                td.innerHTML = res[i]['rent']
-              }else if(j==4){
                 td.innerHTML = res[i]['deadline']
+              }else if(j==4){
+                td.innerHTML = res[i]['rent']
               }else if(j==5){
                 td.innerHTML = res[i]['use']
               }else if(j==6){
