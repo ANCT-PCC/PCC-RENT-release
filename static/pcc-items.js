@@ -59,6 +59,7 @@ window.onload = function(){
 
           document.getElementById('rental_button'+String(i)).addEventListener('click',(e)=>{
             var number = String(e.target.id).replace('rental_button','')
+            console.log(number)
             var iteminfo = [{
               item_number: document.getElementById("item_number"+number).textContent
             }]
@@ -70,7 +71,7 @@ window.onload = function(){
                 dataType: 'json',
                 contentType: 'application/json'
               }).always(function(){
-                location.reload()
+                //location.reload()
               })
           })
         }

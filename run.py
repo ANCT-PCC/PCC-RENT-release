@@ -7,10 +7,9 @@ import hashlib
 import ssl
 import datetime
 
-VERSION = '1.2'
-
 TOKEN_SIZE = 64 #トークンのサイズ
 COOKIE_AGE = 1 #Cookieの有効期限(単位:h)
+VERSION = '1.2'
 
 app = Flask(__name__)
 #context = ssl.SSLContext(ssl.PROTOCOL_TLSv1_2)
@@ -390,6 +389,6 @@ def rental_item():
             return "ERROR",400
 
 init()
-print("Access: https://pcc-rent.nemnet-lab.net/")
+print("Access: http://localhost;8080/")
 #app.run(port=443,host="0.0.0.0",debug=True,ssl_context=context,threaded=True)
 app.run(port=8080,host="0.0.0.0",debug=True,threaded=True)
