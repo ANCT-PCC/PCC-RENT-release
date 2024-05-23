@@ -1,19 +1,16 @@
-from flask import Flask, redirect, url_for, render_template, request,make_response
+from flask import Flask, redirect, url_for, render_template, request,make_response,send_file
+from flask_httpauth import HTTPDigestAuth
 import dbc
 import random,string
 import sqlite3
 import json
 import hashlib
-import ssl
 import datetime
+import userSubmit,itemSubmit
 
 TOKEN_SIZE = 64 #トークンのサイズ
 COOKIE_AGE = 1 #Cookieの有効期限(単位:h)
-VERSION = '1.4'
-
-app = Flask(__name__)
-#context = ssl.SSLContext(ssl.PROTOCOL_TLSv1_2)
-#context.load_cert_chain('cert.crt', 'server_secret.key')
+VERSION = 'ver.2.0'
 
 #初期化処理
 def init():
@@ -34,6 +31,22 @@ def init():
 def randomname(TOKEN_SIZE):
    return ''.join(random.choices(string.ascii_letters + string.digits, k=TOKEN_SIZE))
 
+app = Flask(__name__)
+app.config['SECRET_KEY'] = randomname(TOKEN_SIZE)
+auth = HTTPDigestAuth()
+
+try:
+    with open('setting_files/admin_info.json','r',encoding='utf-8') as f:
+     Admin = json.load(f)
+
+except FileNotFoundError:
+    print("[PCC-RENT] ERROR: setting_files/admin_info.json NOT FOUND.")
+    exit()
+
+@auth.get_password
+def get_pw(id):
+    return Admin.get(id)
+
 @app.route('/',methods=['GET'])
 def index():
     token = request.cookies.get('token')
@@ -47,6 +60,10 @@ def index():
             return render_template('dashboard.html',uname = displayname,ver=VERSION)
         elif login_status == 1 or login_status == 2:
             return redirect('/login')
+        
+@app.route('/favicon.ico')
+def favicon():
+    return send_file('favicon.ico')
     
 
 @app.route('/login',methods=['GET','POST'])
@@ -55,18 +72,15 @@ def login():
         res = request.json[0]
         uname = res['uname']
         passwd = hashlib.sha256(res['passwd'].encode("utf-8")).hexdigest()
-        print(f"{uname} , {passwd}")
         
         uinfo = dbc.search_userinfo_from_name(uname)
         if len(uinfo) != 0:
-            print(f"{uinfo[0][5]}")
             if(uinfo[0][5] == passwd):
                 passwd_flag = True
             else:
                 passwd_flag = False
 
             if passwd_flag == True: #パスワードがあっている
-                print(f"\nパスワードがあっている時の処理\n")
                 token = randomname(TOKEN_SIZE=TOKEN_SIZE) #一意のトークン
                 displayname = dbc.search_userinfo_from_name(uname)[0][0]
                 res = make_response(redirect('/'))
@@ -86,9 +100,7 @@ def login():
         else:
             token="Nodata"
             uname="Nodata"
-            print(f"\ntoken={token}\nresult={res}\n")
             if res == "Nodata" or token is None or res is None:
-                print("\nDEBUG\n")
 
                 return "444",444 #ログインエラーのレス
             else:
@@ -378,7 +390,6 @@ def rental_item():
     else:
         item_number = request.json[0]['item_number']
         item_name = dbc.search_iteminfo_from_number(item_number)[1]
-        print("アイテムの名前"+item_name)
         use = '未記載'
         res = dbc.rent_item(item_number,item_name,use,displayname,uname)
 
@@ -386,8 +397,75 @@ def rental_item():
             return "OK",200
         else:
             return "ERROR",400
+        
+@app.route('/admintools')
+@auth.login_required
+def admintools_top():
+    return redirect('/admintools/top')
+
+@app.route('/admintools/<string:page>')
+@auth.login_required
+def admintools(page):
+    return render_template('admintools/'+page+'.html',ver=VERSION)
+
+@app.route('/admintools/pcc-rent.db')
+@auth.login_required
+def admintools_dlfile():
+    #dlname = 'pcc-rent'+datetime.datetime.now().strftime('%Y%m%d%H%M')+'.db'
+    #mimetype='application/octet-stream'
+    #dir = os.path.abspath(__file__)[:-7]
+    return send_file('pcc-rent.db',as_attachment=True)
+
+@app.route('/admintools/submitusers/<string:mode>',methods=['POST'])
+@auth.login_required
+def submitusers(mode):
+    if mode == 'submit':
+        submit_contents = str(request.json['content'])
+        with open('userList.csv','w',encoding='utf-8') as f:
+            f.write(submit_contents)
+
+        userSubmit.userSubmit()
+        return "OK"
+    elif mode == 'delete':
+        delete_contents = str(request.json['content'])
+        with open('deluserList.csv','w',encoding='utf-8') as f:
+            f.write(delete_contents)
+        
+        userSubmit.userDelete()
+    
+
+@app.route('/admintools/submititems/<string:mode>',methods=['POST'])
+@auth.login_required
+def submititems(mode):
+
+    if mode == 'submit':
+        submit_contents = str(request.json['content'])
+        with open('itemList.csv','w',encoding='utf-8') as f:
+            f.write(submit_contents)
+
+        itemSubmit.itemSubmit()
+        return "OK"
+    elif mode == 'delete':
+        delete_contents = str(request.json['content'])
+        with open('delitemList.csv','w',encoding='utf-8') as f:
+            f.write(delete_contents)
+
+        itemSubmit.itemDelete()
+        return "OK"
+    else:
+        return "404",404
+    
+@app.route('/admintools/db/sqlexecute',methods=['POST'])
+@auth.login_required
+def sqlexecute():
+    sqlcmd = str(request.json['sqlcmd'])
+    result = dbc.sqlExecute(True,sqlcmd)
+    data = {'content':result}
+    print(data['content'])
+    return data['content'],200
+
 
 init()
-print("Access: http://localhost;8080/")
+print("Access: http://localhost:8080/")
 #app.run(port=443,host="0.0.0.0",debug=True,ssl_context=context,threaded=True)
 app.run(port=8080,host="0.0.0.0",debug=True,threaded=True)
