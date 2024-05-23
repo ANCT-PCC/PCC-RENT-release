@@ -134,11 +134,9 @@ def cktoken(name:str,token:str):
     else:
         if len(token_res) == 0 : #ほかにログインしている可能性あり
             #nameが存在かつ、NoTokenではないTokenが存在
-            #print("ヒットなし")
             return name,1
         elif str(token_res[0][8]) == "NoToken": #ログインなし/トークンの期限切れ
             #nameが存在かつ、NoTokenである
-            #print("トークンなし")
             return "NoUname",2
         else:#ユーザのトークンが有効(ログイン状態である)
             name = token_res[0][1]
@@ -234,7 +232,6 @@ def rent_item(item_number:str,item_name:str,use:str,rentby:str,uname:str):
     c.execute(f'''SELECT * FROM "pcc-rental" WHERE number == '{item_number}' AND returned == '貸し出し中' AND rental_id == 'NotSet' ''')
     res = c.fetchall()
 
-    print(len(res))
     if len(res)==0:
         sql = f'''
             INSERT INTO "pcc-rental" VALUES(?,?,?,?,?,?,?,?)

@@ -14,6 +14,7 @@
     
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3">
+    <link href="{{url_for('static',filename='pccrentlogo.css')}}" rel="stylesheet">
 
 <link href="{{url_for('static',filename='assets/dist/css/bootstrap.min.css')}}" rel="stylesheet">
 
@@ -204,21 +205,18 @@
 </svg>
 
 <header class="navbar sticky-top flex-md-nowrap p-0 shadow" style="background-color: #75fbfd;" data-bs-theme="dark">
-  <a href="/" class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-5 text-white">PCC-RENT {{ver}}</a>
-  <ul class="navbar-nav flex-row d-md-none">
-    <li class="nav-item text-nowrap">
+  <a href="/" class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-5 text-white pc">
+    <img class="pc" style="max-width: 100%;height: auto;" src="static/assets/PCC-RENT-logo.png"></img>
+    {{ver}}
+  </a>
+  <a href="/" class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-5 text-white sp">
+    <img style="max-width: 50%;height: auto;" src="static/assets/PCC-RENT-logo.png"> {{ver}}</img>
+  </a>
 
-    </li>
-    <li class="nav-item text-nowrap">
-      <button class="nav-link px-3 text-white" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
-        <img width="30" height="30" src="static/assets/hamburger.png"><use xlink:href="#list"/></img>
-      </button>
-    </li>
-  </ul>
-
-  <div id="navbarSearch" class="navbar-search w-100 collapse">
-    <input class="form-control w-100 rounded-0 border-0" type="text" placeholder="Search" aria-label="Search">
-  </div>
+  <ul class="navbar-nav flex-row d-md-none"></ul>
+  <button class="nav-link px-3 text-white sp" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+    <img width="30" height="30" src="static/assets/hamburger.png"><use xlink:href="#list"/></img>
+  </button>
 </header>
 
 <div class="container-fluid">
@@ -317,5 +315,5 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.3.2/dist/chart.umd.js" integrity="sha384-eI7PSr3L1XLISH8JdDII5YN/njoSsxfbrkCTnJrzXt+ENP5MOVBxD+l6sEG4zoLp" crossorigin="anonymous"></script>
     <script src="{{url_for('static',filename='my_rental_list.js')}}"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
-
+    
 </html>
