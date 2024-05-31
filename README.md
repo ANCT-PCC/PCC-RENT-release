@@ -2,16 +2,10 @@
 
 メモ  
 ---
-**test.py:**  
-書いて字の如く。  
-**main.py:**  
- メインロジック  
+**run.py:**  
+PCC-RENTのAPIサーバ本体  
 **dbc.py:**  
- DB操作用自作ライブラリ  
-**itemManager.py:**  
- アイテムマネージャー(CLI)  
-**login.py:**  
-CLIでのログインスクリプト  
+ DB操作用自作ライブラリ   
 **pcc-rent.db:**  
 このシステムの核となる存在。データ喪失から**死守**せよ
 
@@ -22,10 +16,18 @@ Python 3.10.11
 モジュール: req.txt参照  
 
 ## インストール  
-python3.10 -m venv .venv  
-source ./.venv/bin/activate  
-pip install -r req.txt  
-userSubmit.csvとitemSubmit.csvに内容を記述してから  
-./userSubmit.sh  
-./itemSubmit.sh  
-./start.sh
+新規インストール手順  
+1, https://qiita.com/NeK/items/d9431d5cdfa16dffe6dc に従ってdocker Engineを入れる  
+2, git clone <URL>  
+3, chmod +rx install.sh uninstall.sh reinstall.sh update.sh startup.sh  
+4, ./install.sh  
+5, 必要に応じてCloudflare Tunnnelのコネクタをdockerを用いて生やす  
+6, 動作確認  
+
+## 更新
+更新手順  
+1, "URL"/admin_toolsからデータベースファイルをダウンロード  
+2, docker stop pcc-rent  
+3, git pull  
+4, ./reinstall.sh  
+5, pcc-rentにアクセスして動作確認  

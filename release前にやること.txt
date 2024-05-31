@@ -2,3 +2,18 @@ Webhookのアドレスはrelease用にしたか？
 アクセスURLを https://pcc-rent.nemnet-lab.net/ に設定したか？(startup.shを編集)
 run.py内のVERSION変数は正しい版数になっているか？
 データベースは残っているか？(作業前には、サービスの停止とデータベースのバックアップを必ず行う！！)
+
+更新手順
+1,admin_toolsからデータベースファイルをダウンロード
+2,docker stop pcc-rent
+3,git pull
+4,./reinstall.sh
+5,pcc-rentにアクセスして動作確認
+
+新規インストール手順
+1, https://qiita.com/NeK/items/d9431d5cdfa16dffe6dc に従ってdocker Engineを入れる
+2,git clone <URL>
+3,chmod +rx install.sh uninstall.sh reinstall.sh update.sh startup.sh
+4,./install.sh
+5,必要に応じてCloudflare Tunnnelのコネクタをdockerを用いて生やす
+6,動作確認
