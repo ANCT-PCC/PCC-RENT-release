@@ -1,4 +1,4 @@
-const SERVER_ADDR = 'https://pcc-rent.nemnet-lab.net/'
+const SERVER_ADDR = 'http://localhost:8080/'
 const $logout_button = document.getElementById('logout_button');
 
 var list = [];

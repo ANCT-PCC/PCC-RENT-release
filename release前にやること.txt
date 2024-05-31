@@ -1,0 +1,4 @@
+Webhookのアドレスはrelease用にしたか？
+アクセスURLを https://pcc-rent.nemnet-lab.net/ に設定したか？(startup.shを編集)
+run.py内のVERSION変数は正しい版数になっているか？
+データベースは残っているか？(作業前には、サービスの停止とデータベースのバックアップを必ず行う！！)

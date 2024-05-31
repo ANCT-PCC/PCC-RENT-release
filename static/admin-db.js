@@ -1,4 +1,4 @@
-const SERVER_ADDR = 'https://pcc-rent.nemnet-lab.net/'
+const SERVER_ADDR = 'http://localhost:8080/'
 const $DB_DOUNLOAD = document.getElementById('dbdl_button');
 const $SQL_EXECUTE = document.getElementById('sqlexecute_button') 
 const $SQL_RESULT = document.getElementById('sqlresult')

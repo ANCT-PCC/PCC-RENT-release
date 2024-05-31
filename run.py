@@ -10,7 +10,7 @@ import userSubmit,itemSubmit
 
 TOKEN_SIZE = 64 #トークンのサイズ
 COOKIE_AGE = 1 #Cookieの有効期限(単位:h)
-VERSION = 'ver.2.0'
+VERSION = 'ver.2.1'
 
 #初期化処理
 def init():
@@ -55,6 +55,9 @@ def index():
     if token is None or uname is None or displayname is None:
         return redirect('/login')
     else:
+        pwchangeFlag = dbc.ckpwdchange(uname=uname)
+        if pwchangeFlag == 1:
+            return redirect('/pwdchange')
         uname,login_status = dbc.cktoken(uname,token)
         if login_status == 3: #ログイン状態である
             return render_template('dashboard.html',uname = displayname,ver=VERSION)
@@ -184,6 +187,18 @@ def user_settings():
         else:
             return render_template('user_settings.html',uname=displayname,ver=VERSION)
         
+@app.route('/pwdchange')
+def pwdchange():
+    uname = request.cookies.get('uname')
+    token = request.cookies.get('token')
+    displayname = request.cookies.get('displayname')
+
+    uname,login_status = dbc.cktoken(uname,token)
+    if login_status != 3:
+        return redirect('/login')
+    else:
+        return render_template('passwd_change.html',uname=displayname,ver=VERSION)
+        
 @app.route('/user_settings_discord',methods=['POST'])
 def user_settings_discord():
     
@@ -210,6 +225,9 @@ def my_rental_list():
     if login_status != 3:
         return redirect('/login')
     else:
+        flag = dbc.ckpwdchange(uname)
+        if flag == 1:
+            return redirect('/pwdchange')
         return render_template('my_rental_list.html',uname=displayname,ver=VERSION)
     
 @app.route('/pcc-items')
@@ -222,6 +240,9 @@ def pcc_items():
     if login_status != 3:
         return redirect('/login')
     else:
+        flag = dbc.ckpwdchange(uname)
+        if flag == 1:
+            return redirect('/pwdchange')
         return render_template('pcc-items.html',uname=displayname,ver=VERSION)
     
 @app.route('/members')
@@ -234,6 +255,9 @@ def members():
     if login_status != 3:
         return redirect('/login')
     else:
+        flag = dbc.ckpwdchange(uname)
+        if flag == 1:
+            return redirect('/pwdchange')
         return render_template('members.html',uname=displayname,ver=VERSION)
     
 @app.route('/show_members')

@@ -1,4 +1,4 @@
-const SERVER_ADDR = 'https://pcc-rent.nemnet-lab.net/'
+const SERVER_ADDR = 'http://localhost:8080/'
 const $ITEMLIST = document.getElementById('itemlist')
 const $ITEM_SUBMIT_BUTTON = document.getElementById('item_submit_button')
 

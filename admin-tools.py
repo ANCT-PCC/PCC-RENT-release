@@ -1,4 +1,4 @@
-import dbc
+#未実装
 
 main_msg = '''
     備品管理システム PCC-RENT 管理者ツール
@@ -96,7 +96,6 @@ while True:
             任意のSQLコマンドを実行します。
         '''
         sqlcmd = input("SQLコマンドを入力> ")
-        dbc.sqlExecute(mode=True,sql=sqlcmd)
         exit()
 
     elif main_selector == '5':

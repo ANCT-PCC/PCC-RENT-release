@@ -6,18 +6,13 @@ const $changeFailed = document.getElementById('changeFailed');
 const $newPWD = document.getElementById('newPWD');
 const $newPWD_retype = document.getElementById('newPWD_retype');
 const $currentPWD = document.getElementById('currentPWD');
-const $newDiscord = document.getElementById('newDiscord');
-const $changeDiscordSuccess = document.getElementById('changeDiscordSuccess');
-const $changeDiscord_button = document.getElementById('changeDiscord_button')
 
 function init(){
   $changeFailed.style.visibility = 'hidden';
   $changeSuccess.style.visibility = 'hidden';
-  $changeDiscordSuccess.style.visibility = 'hidden';
   $currentPWD.value = '';
   $newPWD.value = '';
   $newPWD_retype.value = '';
-  $newDiscord.value = '';
 };
 
 $changePWD_button.addEventListener('click',(e)=>{
@@ -77,27 +72,5 @@ $changePWD_button.addEventListener('click',(e)=>{
   
 });
 
-$changeDiscord_button.addEventListener('click',(e)=>{
-  newDiscord = $newDiscord.value;
 
-  
-    var array = [{
-      newDiscord: String(newDiscord)
-    }];
-
-    $.ajax(
-      {
-        url:SERVER_ADDR+'user_settings_discord',
-        type:'POST',
-        data:JSON.stringify(array), //ここで辞書型からJSONに変換
-        dataType: 'json',
-        contentType: 'application/json'
-    }).always(function(jqXHR){
-
-      $changeDiscordSuccess.innerText = "Discordユーザネームが変更されました code="+jqXHR.status;
-      $changeDiscordSuccess.style.visibility = 'visible';
-
-      $newDiscord.value = '';
-    })
-  });
 init()
