@@ -1,7 +1,6 @@
 # PCC-RENT パソコン部備品管理システム
 
-メモ  
----
+## メモ
 **run.py:**  
 PCC-RENTのAPIサーバ本体  
 **dbc.py:**  
@@ -9,11 +8,14 @@ PCC-RENTのAPIサーバ本体
 **pcc-rent.db:**  
 このシステムの核となる存在。データ喪失から**死守**せよ
 
-## 環境
-MacBook Air 13 (Apple M2)  
-macOS Sonoma 14  
-Python 3.10.11  
-モジュール: req.txt参照  
+## 開発環境
+コンテナエンジン: Docker Engine 26.1.3  
+イメージおよび使用言語: Python3.10  
+Pythonモジュール: req.txt参照  
+
+## 想定動作環境  
+Ubuntu Server 22.04  
+Docker Engine 26.1.3
 
 ## インストール  
 新規インストール手順  
