@@ -49,7 +49,7 @@ def create_new_user(display_name:str,name:str,email:str,isAdmin:bool,passwd:str,
     c.execute(INIT_SQL_COMMAND)
     solt = 'not set'
 
-    data = (display_name,name,email,str(isAdmin),solt,hashlib.sha256(passwd.encode("utf-8")).hexdigest(),0,'not set','NoToken',str(grade)+'年 ',user_class,discord)
+    data = (display_name,name,email,str(isAdmin),solt,hashlib.sha256(('Kusopass@'+passwd[1:]).encode("utf-8")).hexdigest(),0,'not set','NoToken',str(grade)+'年 ',user_class,discord)
     #テーブルに登録情報を記録
     sql = f'''
         INSERT INTO "pcc-users" VALUES(?,?,?,?,?,?,?,?,?,?,?,?)
@@ -160,9 +160,11 @@ def ckpwdchange(uname:str):
     if len(res) == 0:
         return 1
     uname_hash = hashlib.sha256(uname.encode('utf-8')).hexdigest()
-    passwd = res[0][5]
+    applied_passwd = res[0][5] #現在設定されているパスワード
+    old_temp_passwd = uname_hash #初期パスワード(改定前)
+    new_temp_passwd = hashlib.sha256(('Kusopass@'+uname[1:]).encode('utf-8')).hexdigest() #初期パスワード(改定後)
 
-    if uname_hash == passwd:
+    if applied_passwd == old_temp_passwd or applied_passwd == new_temp_passwd:
         return 1 #パスワードが未変更
     else:
         return 0
