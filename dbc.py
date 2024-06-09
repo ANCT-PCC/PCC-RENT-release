@@ -161,10 +161,11 @@ def ckpwdchange(uname:str):
         return 1
     uname_hash = hashlib.sha256(uname.encode('utf-8')).hexdigest()
     applied_passwd = res[0][5] #現在設定されているパスワード
-    old_temp_passwd = uname_hash #初期パスワード(改定前)
-    new_temp_passwd = hashlib.sha256(('Kusopass@'+uname[1:]).encode('utf-8')).hexdigest() #初期パスワード(改定後)
+    old_temp_passwd_hash = uname_hash #初期パスワード(改定前)
+    new_temp_passwd = 'Kusopass@'+uname[1:]
+    new_temp_passwd_hash = hashlib.sha256(new_temp_passwd.encode('utf-8')).hexdigest() #初期パスワード(改定後)
 
-    if applied_passwd == old_temp_passwd or applied_passwd == new_temp_passwd:
+    if applied_passwd == old_temp_passwd_hash or applied_passwd == new_temp_passwd_hash:
         return 1 #パスワードが未変更
     else:
         return 0
